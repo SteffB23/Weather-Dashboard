@@ -1,3 +1,15 @@
 body {
-    background-color: #1c1c20;
+    background-color: #fff;
+}
+
+.col-sm-4 {
+    border-radius: 8px;
+    border-bottom-right-radius: 25px;
+    border-style: solid;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
 }
