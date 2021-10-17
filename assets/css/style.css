@@ -1,5 +1,12 @@
+*{
+    box-sizing: border-box;
+    
+}
+
 body {
-    background-color: #fff;
+    background-color: #282c34;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;   
 }
 
 .col-sm-4 {
@@ -13,3 +20,23 @@ img {
     height: 50px;
     border-radius: 25px;
 }
+
+h3{
+    color: white;
+    font-weight: bold;
+}
+
+.forecast{
+    
+    font-size: 0.9em;
+}
+
+span{
+    font-size: 1em;
+}
+
+li:hover{
+    background-color: lightslategray;
+    text-decoration: underline;
+}
+
