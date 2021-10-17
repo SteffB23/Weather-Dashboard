@@ -46,3 +46,26 @@ function currentWeather(city){
         console.log(response);
     })
 }
+
+    
+//Data object from servier side API
+var weathericon = response.weather[0].icon;
+var iconurl = "https://openweathermap.org/img/wn/" + weathericon + "@2x.png";
+var date = new Date(response.dt*1000).toLocaleDateString();
+
+//Concatinate the date and icon
+$(currentCity).html(response.name +"(" + date + ")" + "img src="+iconurl + ">");
+
+//Parse response to display current temp converted to Fahrenheit
+var tempF = (response.main.temp - 273.15) * 1.80 +32;
+$(currentTemperature).html((tempF).toFixed(2) + "&#8457");
+
+//Humidity display
+$(currentHumidty).html(response.main.humidity + "%");
+
+//Wind speed in MPH
+var ws = response.wind.speed;
+var windsmph = (ws * 2.237).toFixed(1);
+$(currentWSpeed).html(windsmph + "MPH");
+
+//UV Index Display
