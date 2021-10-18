@@ -41,5 +41,9 @@ li:hover{
 }
 
 #search-city{
-    color: red;
+    color: #282c34;
+}
+
+#current-city{
+    color: #282c34;
 }

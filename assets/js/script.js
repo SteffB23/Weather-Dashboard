@@ -1,17 +1,15 @@
 //Declare a variable to store the searched city
-var city ="";
-// 🔥👇👇 variable declaration **NOT DEFINED YET 👇👇🔥**
+var city="";
+// variable declaration
 var searchCity = $("#search-city");
 var searchButton = $("#search-button");
 var clearButton = $("#clear-history");
 var currentCity = $("#current-city");
 var currentTemperature = $("#temperature");
 var currentHumidty= $("#humidity");
-var currentWSpeed= $("#wind-speed");
+var currentWSpeed=$("#wind-speed");
 var currentUvindex= $("#uv-index");
 var sCity=[];
-// 🔥☝️👆 variable declaration **NOT DEFINED YET ☝️👆🔥**
-
 // searches the city to see if it exists in the entries from the storage
 function find(c){
     for (var i=0; i<sCity.length; i++){
@@ -21,10 +19,8 @@ function find(c){
     }
     return 1;
 }
-
 // API key
-var APIKey = "a4043d7599994e37cdd0d112ce66f9f8";
-
+var APIKey="a0aca8a89948154a4182dcecc780b513";
 // Will display the 5 day forecast in current city
 function displayWeather(event){
     event.preventDefault();
@@ -44,32 +40,27 @@ function currentWeather(city){
 
         //Parse the response to display the current weather including the City name, date and the weather icon. 
         console.log(response);
-    })
-}
+        //Data object from server side API
+        var weathericon= response.weather[0].icon;
+        var iconurl="https://openweathermap.org/img/wn/"+weathericon +"@2x.png";
+        //Concatenate the date and icon
+        var date=new Date(response.dt*1000).toLocaleDateString();
+        //parse the response for name of city and concanatig the date and icon.
+        $(currentCity).html(response.name +"("+date+")" + "<img src="+iconurl+">");
+        //Parse response to display current temp converted to Fahrenheit
+        
 
-    
-//Data object from servier side API
-var weathericon = response.weather[0].icon;
-var iconurl = "https://openweathermap.org/img/wn/" + weathericon + "@2x.png";
-var date = new Date(response.dt*1000).toLocaleDateString();
-
-//Concatinate the date and icon
-$(currentCity).html(response.name +"(" + date + ")" + "img src="+iconurl + ">");
-
-//Parse response to display current temp converted to Fahrenheit
-var tempF = (response.main.temp - 273.15) * 1.80 +32;
-$(currentTemperature).html((tempF).toFixed(2) + "&#8457");
-
-//Humidity display
-$(currentHumidty).html(response.main.humidity + "%");
-
-//Wind speed in MPH
-var ws = response.wind.speed;
-var windsmph = (ws * 2.237).toFixed(1);
-$(currentWSpeed).html(windsmph + "MPH");
-
-//UV Index Display
-UVIndex(response.coord.lon,response.coord.lat);
+        var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+        $(currentTemperature).html((tempF).toFixed(2)+"&#8457");
+        //Humidity display
+        $(currentHumidty).html(response.main.humidity+"%");
+        //Wind speed in MPH
+        var ws=response.wind.speed;
+        var windsmph=(ws*2.237).toFixed(1);
+        $(currentWSpeed).html(windsmph+"MPH");
+        //UV Index Display
+        //By Geographic coordinates method and using appid and coordinates as a parameter we are going build our uv query url inside the function below.
+        UVIndex(response.coord.lon,response.coord.lat);
         forecast(response.id);
         if(response.cod==200){
             sCity=JSON.parse(localStorage.getItem("cityname"));
@@ -89,8 +80,10 @@ UVIndex(response.coord.lon,response.coord.lat);
                 }
             }
         }
- 
-// This function returns the UVIindex response.
+
+    });
+}
+    // This function returns the UVIindex response.
 function UVIndex(ln,lt){
     //lets build the url for uvindex.
     var uvqURL="https://api.openweathermap.org/data/2.5/uvi?appid="+ APIKey+"&lat="+lt+"&lon="+ln;
@@ -128,14 +121,14 @@ function forecast(cityid){
     });
 }
 
-//Clips previous city on the search history
+//Daynamically add the passed city on the search history
 function addToList(c){
     var listEl= $("<li>"+c.toUpperCase()+"</li>");
     $(listEl).attr("class","list-group-item");
     $(listEl).attr("data-value",c.toUpperCase());
     $(".list-group").append(listEl);
 }
-// displays previous search again when the list group item is clicked in search history
+// display the past search again when the list group item is clicked in search history
 function invokePastSearch(event){
     var liEl=event.target;
     if (event.target.matches("li")){
@@ -167,11 +160,8 @@ function clearHistory(event){
     document.location.reload();
 
 }
-
 //Click Handlers
 $("#search-button").on("click",displayWeather);
 $(document).on("click",invokePastSearch);
 $(window).on("load",loadlastCity);
 $("#clear-history").on("click",clearHistory);
-
-
