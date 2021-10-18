@@ -20,7 +20,7 @@ function find(c){
     return 1;
 }
 // API key
-var APIKey="a0aca8a89948154a4182dcecc780b513";
+var APIKey="a4043d7599994e37cdd0d112ce66f9f8";
 // Will display the 5 day forecast in current city
 function displayWeather(event){
     event.preventDefault();
