@@ -40,4 +40,6 @@ li:hover{
     text-decoration: underline;
 }
 
-
+#search-city{
+    color: red;
+}
